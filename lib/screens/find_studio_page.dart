@@ -3,10 +3,6 @@ import 'package:flutter/services.dart';
 
 import 'search_result_page.dart';
 
-// ============================================================================
-// FORM KEBUTUHAN / FIND ME A STUDIO
-// Dikerjakan oleh: Senna Almalia Syafila (162024019)
-// ============================================================================
 class FindStudioPage extends StatefulWidget {
   const FindStudioPage({super.key});
 
@@ -49,8 +45,18 @@ class _FindStudioPageState extends State<FindStudioPage> {
 
   String _formatDate(DateTime d) {
     const bulan = [
-      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
     ];
     return '${d.day} ${bulan[d.month - 1]}';
   }
@@ -291,7 +297,10 @@ class _FindStudioPageState extends State<FindStudioPage> {
                         children: [
                           Text(
                             'Area or city',
-                            style: TextStyle(fontSize: 10, color: Colors.black54),
+                            style: TextStyle(
+                              fontSize: 10,
+                              color: Colors.black54,
+                            ),
                           ),
                           Text(
                             'Kemang, Jakarta',
@@ -463,9 +472,7 @@ class _FindStudioPageState extends State<FindStudioPage> {
                               : Colors.white,
                           borderRadius: BorderRadius.circular(10),
                           border: Border.all(
-                            color: selectedCooling == 0
-                                ? Colors.black
-                                : border,
+                            color: selectedCooling == 0 ? Colors.black : border,
                           ),
                         ),
                         child: Center(
@@ -498,9 +505,7 @@ class _FindStudioPageState extends State<FindStudioPage> {
                               : Colors.white,
                           borderRadius: BorderRadius.circular(10),
                           border: Border.all(
-                            color: selectedCooling == 1
-                                ? Colors.black
-                                : border,
+                            color: selectedCooling == 1 ? Colors.black : border,
                           ),
                         ),
                         child: Center(
@@ -532,9 +537,7 @@ class _FindStudioPageState extends State<FindStudioPage> {
                               : Colors.white,
                           borderRadius: BorderRadius.circular(10),
                           border: Border.all(
-                            color: selectedCooling == 2
-                                ? Colors.black
-                                : border,
+                            color: selectedCooling == 2 ? Colors.black : border,
                           ),
                         ),
                         child: Center(
@@ -694,7 +697,8 @@ class _FindStudioPageState extends State<FindStudioPage> {
                         builder: (context) => SearchResultPage(
                           location: 'Kemang',
                           date: _formatDate(selectedDate),
-                          time: '${_formatTime(selectedTime)} - $durationHours hr',
+                          time:
+                              '${_formatTime(selectedTime)} - $durationHours hr',
                           people: '$people people',
                           cooling: selectedCooling == 0
                               ? 'Air conditioning'
@@ -733,4 +737,3 @@ class _FindStudioPageState extends State<FindStudioPage> {
     );
   }
 }
-
