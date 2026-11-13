@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../models/studio.dart';
 import 'detail_page.dart';
 import 'find_studio_page.dart';
+import 'my_bookings_page.dart';
 import 'search_result_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -84,160 +85,173 @@ class _HomePageState extends State<HomePage> {
             Column(
               children: [
                 Expanded(
-                  child: SingleChildScrollView(
-                    controller: scrollController,
-                    physics: const AlwaysScrollableScrollPhysics(),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        // Header Dashboard
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(22, 14, 22, 12),
-                          child: Row(
-                            children: const [
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Good morning',
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        color: Color(0xFF777777),
+                  child: selectedMenu == 2
+                      ? const MyBookingsContent()
+                      : SingleChildScrollView(
+                          controller: scrollController,
+                          physics: const AlwaysScrollableScrollPhysics(),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              // Header Dashboard
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(
+                                  22,
+                                  14,
+                                  22,
+                                  12,
+                                ),
+                                child: Row(
+                                  children: const [
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            'Good morning',
+                                            style: TextStyle(
+                                              fontSize: 12,
+                                              color: Color(0xFF777777),
+                                            ),
+                                          ),
+                                          SizedBox(height: 4),
+                                          Text(
+                                            'Find your space.',
+                                            style: TextStyle(
+                                              fontSize: 24,
+                                              fontWeight: FontWeight.w600,
+                                              letterSpacing: -0.8,
+                                              color: Color(0xFF182522),
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ),
-                                    SizedBox(height: 4),
-                                    Text(
-                                      'Find your space.',
-                                      style: TextStyle(
-                                        fontSize: 24,
-                                        fontWeight: FontWeight.w600,
-                                        letterSpacing: -0.8,
-                                        color: Color(0xFF182522),
+                                    CircleAvatar(
+                                      radius: 19,
+                                      backgroundColor: Color(0xFFD8F26A),
+                                      child: Text(
+                                        'KA',
+                                        style: TextStyle(
+                                          color: Color(0xFF25332C),
+                                          fontSize: 11,
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                       ),
                                     ),
                                   ],
                                 ),
                               ),
-                              CircleAvatar(
-                                radius: 19,
-                                backgroundColor: Color(0xFFD8F26A),
-                                child: Text(
-                                  'KA',
-                                  style: TextStyle(
-                                    color: Color(0xFF25332C),
-                                    fontSize: 11,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+
+                              // Studio Match Dark Card (Buka Find Me a Studio saat diklik)
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 25,
                                 ),
-                              ),
-                            ],
-                          ),
-                        ),
-
-                        // Studio Match Dark Card (Buka Find Me a Studio saat diklik)
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 25),
-                          child: GestureDetector(
-                            onTap: _navigateToFindStudio,
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: const Color(0xFF1F302F),
-                                borderRadius: BorderRadius.circular(16),
-                              ),
-                              clipBehavior: Clip.antiAlias,
-                              child: Stack(
-                                children: [
-                                  // Dekorasi lingkaran hijau di kanan atas
-                                  Positioned(
-                                    top: -45,
-                                    right: -45,
-                                    child: Container(
-                                      width: 125,
-                                      height: 125,
-                                      decoration: const BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: Color(0xFF385040),
-                                      ),
+                                child: GestureDetector(
+                                  onTap: _navigateToFindStudio,
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: const Color(0xFF1F302F),
+                                      borderRadius: BorderRadius.circular(16),
                                     ),
-                                  ),
-                                  Positioned(
-                                    top: -22,
-                                    right: -22,
-                                    child: Container(
-                                      width: 75,
-                                      height: 75,
-                                      decoration: const BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: Color(0xFF2B3E32),
-                                      ),
-                                    ),
-                                  ),
-
-                                  // Konten dalam kartu
-                                  Padding(
-                                    padding: const EdgeInsets.fromLTRB(
-                                      18,
-                                      30,
-                                      18,
-                                      28,
-                                    ),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                    clipBehavior: Clip.antiAlias,
+                                    child: Stack(
                                       children: [
-                                        const Text(
-                                          'STUDIO MATCH',
-                                          style: TextStyle(
-                                            color: Color(0xFFD8F26A),
-                                            fontSize: 9,
-                                            fontWeight: FontWeight.bold,
-                                            letterSpacing: 1.2,
-                                          ),
-                                        ),
-                                        const SizedBox(height: 14),
-                                        const Text(
-                                          'What are you\ncreating today?',
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 25,
-                                            height: 1.15,
-                                            fontWeight: FontWeight.w600,
-                                            letterSpacing: -0.4,
-                                          ),
-                                        ),
-                                        const SizedBox(height: 22),
-                                        Container(
-                                          height: 44,
-                                          padding: const EdgeInsets.symmetric(
-                                            horizontal: 10,
-                                          ),
-                                          decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            borderRadius: BorderRadius.circular(
-                                              14,
+                                        // Dekorasi lingkaran hijau di kanan atas
+                                        Positioned(
+                                          top: -45,
+                                          right: -45,
+                                          child: Container(
+                                            width: 125,
+                                            height: 125,
+                                            decoration: const BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              color: Color(0xFF385040),
                                             ),
                                           ),
-                                          child: Row(
-                                            children: const [
-                                              Icon(
-                                                Icons.search,
-                                                color: Color(0xFFFF775E),
-                                                size: 20,
-                                              ),
-                                              SizedBox(width: 8),
-                                              Text(
-                                                'Location, date, people...',
+                                        ),
+                                        Positioned(
+                                          top: -22,
+                                          right: -22,
+                                          child: Container(
+                                            width: 75,
+                                            height: 75,
+                                            decoration: const BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              color: Color(0xFF2B3E32),
+                                            ),
+                                          ),
+                                        ),
+
+                                        // Konten dalam kartu
+                                        Padding(
+                                          padding: const EdgeInsets.fromLTRB(
+                                            18,
+                                            30,
+                                            18,
+                                            28,
+                                          ),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              const Text(
+                                                'STUDIO MATCH',
                                                 style: TextStyle(
-                                                  fontSize: 11,
-                                                  color: Colors.grey,
+                                                  color: Color(0xFFD8F26A),
+                                                  fontSize: 9,
+                                                  fontWeight: FontWeight.bold,
+                                                  letterSpacing: 1.2,
                                                 ),
                                               ),
-                                              Spacer(),
-                                              Icon(
-                                                Icons.arrow_forward_ios,
-                                                color: Colors.grey,
-                                                size: 13,
+                                              const SizedBox(height: 14),
+                                              const Text(
+                                                'What are you\ncreating today?',
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 25,
+                                                  height: 1.15,
+                                                  fontWeight: FontWeight.w600,
+                                                  letterSpacing: -0.4,
+                                                ),
+                                              ),
+                                              const SizedBox(height: 22),
+                                              Container(
+                                                height: 44,
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                      horizontal: 10,
+                                                    ),
+                                                decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  borderRadius:
+                                                      BorderRadius.circular(14),
+                                                ),
+                                                child: Row(
+                                                  children: const [
+                                                    Icon(
+                                                      Icons.search,
+                                                      color: Color(0xFFFF775E),
+                                                      size: 20,
+                                                    ),
+                                                    SizedBox(width: 8),
+                                                    Text(
+                                                      'Location, date, people...',
+                                                      style: TextStyle(
+                                                        fontSize: 11,
+                                                        color: Colors.grey,
+                                                      ),
+                                                    ),
+                                                    Spacer(),
+                                                    Icon(
+                                                      Icons.arrow_forward_ios,
+                                                      color: Colors.grey,
+                                                      size: 13,
+                                                    ),
+                                                  ],
+                                                ),
                                               ),
                                             ],
                                           ),
@@ -245,92 +259,98 @@ class _HomePageState extends State<HomePage> {
                                       ],
                                     ),
                                   ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-
-                        const SizedBox(height: 20),
-
-                        // Section Title: Studios nearby
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 22),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: const [
-                                  Text(
-                                    'CURATED FOR YOU',
-                                    style: TextStyle(
-                                      fontSize: 8.5,
-                                      color: Color(0xFF777777),
-                                      letterSpacing: 1,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                  SizedBox(height: 4),
-                                  Text(
-                                    'Studios nearby',
-                                    style: TextStyle(
-                                      fontSize: 19,
-                                      fontWeight: FontWeight.w600,
-                                      letterSpacing: -0.4,
-                                      color: Color(0xFF182522),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          const SearchResultPage(),
-                                    ),
-                                  );
-                                },
-                                child: const Text(
-                                  'See all',
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    color: Color(0xFF777777),
-                                    fontWeight: FontWeight.w500,
-                                  ),
                                 ),
                               ),
+
+                              const SizedBox(height: 20),
+
+                              // Section Title: Studios nearby
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 22,
+                                ),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: const [
+                                        Text(
+                                          'CURATED FOR YOU',
+                                          style: TextStyle(
+                                            fontSize: 8.5,
+                                            color: Color(0xFF777777),
+                                            letterSpacing: 1,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                        SizedBox(height: 4),
+                                        Text(
+                                          'Studios nearby',
+                                          style: TextStyle(
+                                            fontSize: 19,
+                                            fontWeight: FontWeight.w600,
+                                            letterSpacing: -0.4,
+                                            color: Color(0xFF182522),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                const SearchResultPage(),
+                                          ),
+                                        );
+                                      },
+                                      child: const Text(
+                                        'See all',
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          color: Color(0xFF777777),
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+
+                              const SizedBox(height: 10),
+
+                              // Daftar Kartu Studio
+                              if (filteredStudios.isEmpty)
+                                const Padding(
+                                  padding: EdgeInsets.all(30),
+                                  child: Center(
+                                    child: Text(
+                                      'Studio tidak ditemukan.',
+                                      style: TextStyle(fontSize: 13),
+                                    ),
+                                  ),
+                                )
+                              else
+                                ...filteredStudios.map((studio) {
+                                  return Padding(
+                                    padding: const EdgeInsets.fromLTRB(
+                                      22,
+                                      0,
+                                      22,
+                                      14,
+                                    ),
+                                    child: _buildStudioCard(studio),
+                                  );
+                                }),
+
+                              const SizedBox(height: 15),
                             ],
                           ),
                         ),
-
-                        const SizedBox(height: 10),
-
-                        // Daftar Kartu Studio
-                        if (filteredStudios.isEmpty)
-                          const Padding(
-                            padding: EdgeInsets.all(30),
-                            child: Center(
-                              child: Text(
-                                'Studio tidak ditemukan.',
-                                style: TextStyle(fontSize: 13),
-                              ),
-                            ),
-                          )
-                        else
-                          ...filteredStudios.map((studio) {
-                            return Padding(
-                              padding: const EdgeInsets.fromLTRB(22, 0, 22, 14),
-                              child: _buildStudioCard(studio),
-                            );
-                          }),
-
-                        const SizedBox(height: 15),
-                      ],
-                    ),
-                  ),
                 ),
 
                 // Navigasi Bawah
@@ -365,7 +385,7 @@ class _HomePageState extends State<HomePage> {
             ),
 
             // Tombol Scroll ke Atas
-            if (showScrollTop)
+            if (showScrollTop && selectedMenu == 0)
               Positioned(
                 right: 26,
                 bottom: 85,
@@ -572,7 +592,7 @@ class _HomePageState extends State<HomePage> {
               context,
               MaterialPageRoute(builder: (context) => const SearchResultPage()),
             );
-          } else if (index > 1) {
+          } else if (index > 2) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text('$label - MyStudio'),
