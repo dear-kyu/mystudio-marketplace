@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'booking_confirmed_page.dart';
+import 'payment.dart';
 
 class BookingSummaryPage extends StatelessWidget {
   final String studioName;
@@ -359,7 +359,7 @@ class BookingSummaryPage extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const BookingConfirmedPage(),
+                        builder: (context) => const PaymentPage(),
                       ),
                     );
                   },

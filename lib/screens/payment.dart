@@ -53,8 +53,6 @@ class PaymentPage extends StatefulWidget {
 }
 
 class _PaymentPageState extends State<PaymentPage> {
-  static const _roles = ['Customer', 'Owner', 'Admin'];
-
   static const _methods = [
     _PaymentMethod(
       title: 'Bank transfer',
@@ -75,7 +73,6 @@ class _PaymentPageState extends State<PaymentPage> {
 
   static const String _total = 'Rp95.000';
 
-  String _role = 'Customer';
   int _selected = 0;
 
   int _secondsLeft = 9 * 60 + 42;
@@ -113,55 +110,47 @@ class _PaymentPageState extends State<PaymentPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          RoleSwitcherBar(
-            roles: _roles,
-            selected: _role,
-            onChanged: (r) => setState(() => _role = r),
-          ),
-          Expanded(
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.fromLTRB(20, 31, 20, 32),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const _Header(),
-                  const SizedBox(height: 27),
-                  _HoldBanner(timeText: _timeText),
-                  const SizedBox(height: 30),
-                  const _TotalSection(total: _total),
-                  const SizedBox(height: 37),
-                  const Text(
-                    'PAYMENT METHOD',
-                    style: TextStyle(
-                      fontSize: 9.5,
-                      fontWeight: FontWeight.w700,
-                      letterSpacing: 1.3,
-                      color: AppColors.label,
-                    ),
-                  ),
-                  const SizedBox(height: 12),
-                  for (int i = 0; i < _methods.length; i++) ...[
-                    _MethodTile(
-                      method: _methods[i],
-                      selected: _selected == i,
-                      onTap: () => setState(() => _selected = i),
-                    ),
-                    if (i != _methods.length - 1) const SizedBox(height: 9),
-                  ],
-                  const SizedBox(height: 24),
-                  const _SecureNote(),
-                  const SizedBox(height: 18),
-                  _PayButton(
-                    label: 'Pay $_total',
-                    onTap: _secondsLeft > 0 ? _pay : null,
-                  ),
-                ],
+      backgroundColor: AppColors.background,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.fromLTRB(20, 16, 20, 32),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const _Header(),
+              const SizedBox(height: 27),
+              _HoldBanner(timeText: _timeText),
+              const SizedBox(height: 30),
+              const _TotalSection(total: _total),
+              const SizedBox(height: 37),
+              const Text(
+                'PAYMENT METHOD',
+                style: TextStyle(
+                  fontSize: 9.5,
+                  fontWeight: FontWeight.w700,
+                  letterSpacing: 1.3,
+                  color: AppColors.label,
+                ),
               ),
-            ),
+              const SizedBox(height: 12),
+              for (int i = 0; i < _methods.length; i++) ...[
+                _MethodTile(
+                  method: _methods[i],
+                  selected: _selected == i,
+                  onTap: () => setState(() => _selected = i),
+                ),
+                if (i != _methods.length - 1) const SizedBox(height: 9),
+              ],
+              const SizedBox(height: 24),
+              const _SecureNote(),
+              const SizedBox(height: 18),
+              _PayButton(
+                label: 'Pay $_total',
+                onTap: _secondsLeft > 0 ? _pay : null,
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
