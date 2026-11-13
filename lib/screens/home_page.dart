@@ -358,26 +358,21 @@ class _HomePageState extends State<HomePage> {
                   decoration: const BoxDecoration(
                     color: Colors.white,
                     border: Border(
-                      top: BorderSide(color: Color(0xFFEAE9E5), width: 0.7),
+                      top: BorderSide(color: Color(0xFFEDE8E1), width: 0.8),
                     ),
                   ),
                   padding: EdgeInsets.only(
-                    top: 8,
+                    top: 9,
                     bottom: MediaQuery.of(context).padding.bottom > 0
-                        ? (MediaQuery.of(context).padding.bottom * 0.6)
-                        : 6,
+                        ? (MediaQuery.of(context).padding.bottom * 0.7)
+                        : 8,
                   ),
                   child: Row(
                     children: [
-                      _buildMenuItem(Icons.home_outlined, 'Home', 0),
-                      _buildMenuItem(Icons.search, 'Browse', 1),
-                      _buildMenuItem(
-                        Icons.calendar_month_outlined,
-                        'Bookings',
-                        2,
-                      ),
-                      _buildMenuItem(Icons.chat_bubble_outline, 'Messages', 3),
-                      _buildMenuItem(Icons.person_outline, 'Profile', 4),
+                      _buildMenuItem(_NavIconType.home, 'Home', 0),
+                      _buildMenuItem(_NavIconType.browse, 'Browse', 1),
+                      _buildMenuItem(_NavIconType.bookings, 'My Bookings', 2),
+                      _buildMenuItem(_NavIconType.profile, 'Profile', 3),
                     ],
                   ),
                 ),
@@ -578,8 +573,11 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildMenuItem(IconData icon, String label, int index) {
+  Widget _buildMenuItem(_NavIconType type, String label, int index) {
     final isSelected = selectedMenu == index;
+    final color = isSelected
+        ? const Color(0xFFFF5E36)
+        : const Color(0xFF8A8F8B);
 
     return Expanded(
       child: InkWell(
@@ -592,7 +590,7 @@ class _HomePageState extends State<HomePage> {
               context,
               MaterialPageRoute(builder: (context) => const SearchResultPage()),
             );
-          } else if (index > 2) {
+          } else if (index == 3) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text('$label - MyStudio'),
@@ -602,26 +600,18 @@ class _HomePageState extends State<HomePage> {
           }
         },
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 2),
+          padding: const EdgeInsets.symmetric(vertical: 3),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(
-                icon,
-                size: 21,
-                color: isSelected
-                    ? const Color(0xFFFF775E)
-                    : const Color(0xFF999999),
-              ),
-              const SizedBox(height: 4),
+              _buildNavIcon(type, color),
+              const SizedBox(height: 5),
               Text(
                 label,
                 style: TextStyle(
-                  fontSize: 9,
-                  fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
-                  color: isSelected
-                      ? const Color(0xFFFF775E)
-                      : const Color(0xFF999999),
+                  fontSize: 10,
+                  fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
+                  color: color,
                 ),
               ),
             ],
@@ -630,4 +620,186 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+
+  Widget _buildNavIcon(_NavIconType type, Color color) {
+    switch (type) {
+      case _NavIconType.home:
+        return CustomPaint(
+          size: const Size(22, 22),
+          painter: _HomeIconPainter(color: color),
+        );
+      case _NavIconType.browse:
+        return CustomPaint(
+          size: const Size(22, 22),
+          painter: _SearchIconPainter(color: color),
+        );
+      case _NavIconType.bookings:
+        return CustomPaint(
+          size: const Size(22, 22),
+          painter: _CalendarIconPainter(color: color),
+        );
+      case _NavIconType.profile:
+        return CustomPaint(
+          size: const Size(22, 22),
+          painter: _ProfileIconPainter(color: color),
+        );
+    }
+  }
+}
+
+enum _NavIconType { home, browse, bookings, profile }
+
+class _HomeIconPainter extends CustomPainter {
+  final Color color;
+  _HomeIconPainter({required this.color});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = color
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1.8
+      ..strokeCap = StrokeCap.round
+      ..strokeJoin = StrokeJoin.round;
+
+    final w = size.width;
+    final h = size.height;
+
+    // Outer house outline: triangle roof + walls + floor
+    final path = Path();
+    path.moveTo(w * 0.5, h * 0.10);
+    path.lineTo(w * 0.12, h * 0.44);
+    path.lineTo(w * 0.20, h * 0.44);
+    path.lineTo(w * 0.20, h * 0.92);
+    path.lineTo(w * 0.80, h * 0.92);
+    path.lineTo(w * 0.80, h * 0.44);
+    path.lineTo(w * 0.88, h * 0.44);
+    path.close();
+    canvas.drawPath(path, paint);
+
+    // Inner door
+    final door = Path();
+    door.moveTo(w * 0.39, h * 0.92);
+    door.lineTo(w * 0.39, h * 0.60);
+    door.lineTo(w * 0.61, h * 0.60);
+    door.lineTo(w * 0.61, h * 0.92);
+    canvas.drawPath(door, paint);
+  }
+
+  @override
+  bool shouldRepaint(covariant _HomeIconPainter oldDelegate) =>
+      oldDelegate.color != color;
+}
+
+class _SearchIconPainter extends CustomPainter {
+  final Color color;
+  _SearchIconPainter({required this.color});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = color
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1.8
+      ..strokeCap = StrokeCap.round;
+
+    final w = size.width;
+    final h = size.height;
+
+    // Glass circle
+    canvas.drawCircle(Offset(w * 0.44, h * 0.44), w * 0.27, paint);
+
+    // Handle
+    canvas.drawLine(
+      Offset(w * 0.63, h * 0.63),
+      Offset(w * 0.86, h * 0.86),
+      paint,
+    );
+  }
+
+  @override
+  bool shouldRepaint(covariant _SearchIconPainter oldDelegate) =>
+      oldDelegate.color != color;
+}
+
+class _CalendarIconPainter extends CustomPainter {
+  final Color color;
+  _CalendarIconPainter({required this.color});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = color
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1.8
+      ..strokeCap = StrokeCap.round
+      ..strokeJoin = StrokeJoin.round;
+
+    final w = size.width;
+    final h = size.height;
+
+    // Body
+    final rrect = RRect.fromRectAndRadius(
+      Rect.fromLTWH(w * 0.15, h * 0.22, w * 0.70, h * 0.70),
+      const Radius.circular(3.5),
+    );
+    canvas.drawRRect(rrect, paint);
+
+    // 2 Top Rings
+    canvas.drawLine(
+      Offset(w * 0.34, h * 0.10),
+      Offset(w * 0.34, h * 0.25),
+      paint,
+    );
+    canvas.drawLine(
+      Offset(w * 0.66, h * 0.10),
+      Offset(w * 0.66, h * 0.25),
+      paint,
+    );
+
+    // Header divider line
+    canvas.drawLine(
+      Offset(w * 0.15, h * 0.42),
+      Offset(w * 0.85, h * 0.42),
+      paint,
+    );
+  }
+
+  @override
+  bool shouldRepaint(covariant _CalendarIconPainter oldDelegate) =>
+      oldDelegate.color != color;
+}
+
+class _ProfileIconPainter extends CustomPainter {
+  final Color color;
+  _ProfileIconPainter({required this.color});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = color
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1.8
+      ..strokeCap = StrokeCap.round;
+
+    final w = size.width;
+    final h = size.height;
+
+    // Head
+    canvas.drawCircle(Offset(w * 0.5, h * 0.34), w * 0.18, paint);
+
+    // Shoulders
+    final path = Path();
+    path.moveTo(w * 0.18, h * 0.90);
+    path.cubicTo(
+      w * 0.20, h * 0.63,
+      w * 0.80, h * 0.63,
+      w * 0.82, h * 0.90,
+    );
+    canvas.drawPath(path, paint);
+  }
+
+  @override
+  bool shouldRepaint(covariant _ProfileIconPainter oldDelegate) =>
+      oldDelegate.color != color;
 }
