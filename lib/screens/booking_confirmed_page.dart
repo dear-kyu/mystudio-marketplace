@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import 'home_page.dart';
+
 // Halaman Booking Confirmed
 class BookingConfirmedPage extends StatelessWidget {
   const BookingConfirmedPage({super.key});
@@ -526,7 +528,15 @@ class BookingConfirmedPage extends StatelessWidget {
 
           // Tombol kembali ke My Bookings
           InkWell(
-            onTap: () => Navigator.pop(context),
+            onTap: () {
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const HomePage(initialMenu: 2),
+                ),
+                (route) => false,
+              );
+            },
             child: Container(
               width: double.infinity,
               padding: const EdgeInsets.symmetric(vertical: 14),
