@@ -269,7 +269,10 @@ class _Header extends StatelessWidget {
               size: 14,
               color: AppColors.ink,
             ),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pop(context);
+              Navigator.pop(context);
+            },
           ),
         ),
         const SizedBox(width: 12),

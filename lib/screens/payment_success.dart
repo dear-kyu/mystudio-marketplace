@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'payment.dart';
+import 'booking_confirmed_page.dart';
+import 'home_page.dart';
+
 
 // ---------------------------------------------------------------------------
 // Halaman Payment Successful ("You're booked!")
@@ -21,15 +24,23 @@ class _PaymentSuccessPageState extends State<PaymentSuccessPage> {
   String _role = 'Customer';
 
   void _openAssistant() {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Membuka WhatsApp Booking Assistant')),
-    );
-  }
+  Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (context) => const BookingConfirmedPage(),
+    ),
+  );
+}
 
-  void _backToHome() {
-    Navigator.of(context).popUntil((route) => route.isFirst);
-  }
-
+ void _backToHome() {
+  Navigator.pushAndRemoveUntil(
+    context,
+    MaterialPageRoute(
+      builder: (context) => const HomePage(),
+    ),
+    (route) => false,
+  );
+}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
