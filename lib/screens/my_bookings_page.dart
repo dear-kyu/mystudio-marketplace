@@ -295,3 +295,38 @@ class _MyBookingsContentState extends State<MyBookingsContent> {
     );
   }
 }
+
+// Halaman MyBookings standalone jika dipanggil melalui Navigator.push
+class MyBookingsPage extends StatelessWidget {
+  const MyBookingsPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: const Color(0xFFF8F7F3),
+      appBar: AppBar(
+        backgroundColor: const Color(0xFFF8F7F3),
+        elevation: 0,
+        scrolledUnderElevation: 0,
+        leading: InkWell(
+          onTap: () => Navigator.pop(context),
+          borderRadius: BorderRadius.circular(20),
+          child: Container(
+            margin: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              shape: BoxShape.circle,
+              border: Border.all(color: const Color(0xFFE5E2DA)),
+            ),
+            child: const Icon(
+              Icons.chevron_left,
+              color: Color(0xFF16221F),
+              size: 22,
+            ),
+          ),
+        ),
+      ),
+      body: const SafeArea(top: false, child: MyBookingsContent()),
+    );
+  }
+}

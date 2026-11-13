@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'booking_confirmed_page.dart';
+
 class BookingSummaryPage extends StatelessWidget {
   final String studioName;
   final String studioLocation;
@@ -354,7 +356,12 @@ class BookingSummaryPage extends StatelessWidget {
                 height: 52,
                 child: ElevatedButton(
                   onPressed: () {
-                    // Siap diarahkan ke halaman pembayaran berikutnya saat kodingannya digabung
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const BookingConfirmedPage(),
+                      ),
+                    );
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: orange,
