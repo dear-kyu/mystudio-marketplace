@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:device_preview/device_preview.dart';
 
-import 'screens/home_page.dart';
+import 'screens/register_page.dart';
 
 void main() {
   runApp(
