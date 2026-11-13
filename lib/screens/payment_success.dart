@@ -16,12 +16,8 @@ class PaymentSuccessPage extends StatefulWidget {
 }
 
 class _PaymentSuccessPageState extends State<PaymentSuccessPage> {
-  static const _roles = ['Customer', 'Owner', 'Admin'];
-
   static const String _imageUrl =
       'https://images.unsplash.com/photo-1586232702178-f044c5f4d4b7?auto=format&fit=crop&w=1000&q=85';
-
-  String _role = 'Customer';
 
   void _openAssistant() {
   Navigator.push(
@@ -44,19 +40,13 @@ class _PaymentSuccessPageState extends State<PaymentSuccessPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          RoleSwitcherBar(
-            roles: _roles,
-            selected: _role,
-            onChanged: (r) => setState(() => _role = r),
-          ),
-          Expanded(
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.fromLTRB(20, 55, 20, 32),
-              child: Column(
-                children: [
-                  const _SuccessBadge(),
+      backgroundColor: AppColors.background,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.fromLTRB(20, 32, 20, 32),
+          child: Column(
+            children: [
+              const _SuccessBadge(),
                   const SizedBox(height: 10),
                   const Text(
                     'PAYMENT SUCCESSFUL',
@@ -110,10 +100,8 @@ class _PaymentSuccessPageState extends State<PaymentSuccessPage> {
               ),
             ),
           ),
-        ],
-      ),
-    );
-  }
+        );
+      }
 }
 
 // ---------------------------------------------------------------------------
