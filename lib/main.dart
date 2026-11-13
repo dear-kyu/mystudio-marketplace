@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
         ),
         fontFamily: 'Roboto',
       ),
-      home: const HomePage(),
+      home: const RegisterPage(),
     );
   }
 }
