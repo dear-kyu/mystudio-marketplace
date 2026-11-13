@@ -7,14 +7,16 @@ import 'my_bookings_page.dart';
 import 'search_result_page.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  final int initialMenu;
+
+  const HomePage({super.key, this.initialMenu = 0});
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  int selectedMenu = 0;
+  late int selectedMenu;
   String searchText = '';
 
   final Set<int> favoriteStudios = {};
@@ -27,6 +29,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+    selectedMenu = widget.initialMenu;
     scrollController.addListener(() {
       final shouldShow = scrollController.offset > 150;
       if (showScrollTop != shouldShow && mounted) {
@@ -791,11 +794,7 @@ class _ProfileIconPainter extends CustomPainter {
     // Shoulders
     final path = Path();
     path.moveTo(w * 0.18, h * 0.90);
-    path.cubicTo(
-      w * 0.20, h * 0.63,
-      w * 0.80, h * 0.63,
-      w * 0.82, h * 0.90,
-    );
+    path.cubicTo(w * 0.20, h * 0.63, w * 0.80, h * 0.63, w * 0.82, h * 0.90);
     canvas.drawPath(path, paint);
   }
 
