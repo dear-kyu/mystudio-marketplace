@@ -3,10 +3,6 @@ import 'package:flutter/material.dart';
 import '../models/studio.dart';
 import 'detail_page.dart';
 
-// ============================================================================
-// HASIL PENCARIAN STUDIO
-// Dikerjakan oleh: Dealova Quaybah (162024005)
-// ============================================================================
 class SearchResultPage extends StatefulWidget {
   final String location;
   final String date;
@@ -79,9 +75,7 @@ class _SearchResultPageState extends State<SearchResultPage> {
   void _navigateToDetail(Studio studio) {
     Navigator.push(
       context,
-      MaterialPageRoute(
-        builder: (context) => DetailPage(studio: studio),
-      ),
+      MaterialPageRoute(builder: (context) => DetailPage(studio: studio)),
     );
   }
 
@@ -663,10 +657,7 @@ class _SearchResultPageState extends State<SearchResultPage> {
         color: const Color(0xFFF1EFEA),
         borderRadius: BorderRadius.circular(6),
       ),
-      padding: const EdgeInsets.symmetric(
-        horizontal: 9,
-        vertical: 4.5,
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 4.5),
       child: Text(
         tag,
         style: const TextStyle(
@@ -678,4 +669,3 @@ class _SearchResultPageState extends State<SearchResultPage> {
     );
   }
 }
-
