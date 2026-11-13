@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../models/studio.dart';
+import 'availability_page.dart';
 
-// ============================================================================
-// DETAIL STUDIO / STUDIO DETAIL
-// Dikerjakan oleh: Rita Karmila (162024024)
-// ============================================================================
 class StudioDetailColors {
   static const background = Color(0xFFF6F3EE);
   static const ink = Color(0xFF1C1B1A);
@@ -21,10 +18,7 @@ class StudioDetailColors {
 class DetailPage extends StatefulWidget {
   final Studio? studio;
 
-  const DetailPage({
-    super.key,
-    this.studio,
-  });
+  const DetailPage({super.key, this.studio});
 
   @override
   State<DetailPage> createState() => _DetailPageState();
@@ -50,17 +44,15 @@ class _DetailPageState extends State<DetailPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _HeroImage(
-                    current: 1,
-                    total: 6,
-                    imageUrl: _studio.imageUrl,
-                  ),
+                  _HeroImage(current: 1, total: 6, imageUrl: _studio.imageUrl),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(18, 14, 18, 24),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        _AvailabilityLabel(text: _studio.availableTime.toUpperCase()),
+                        _AvailabilityLabel(
+                          text: _studio.availableTime.toUpperCase(),
+                        ),
                         const SizedBox(height: 8),
                         Text(
                           _studio.name,
@@ -140,13 +132,10 @@ class _DetailPageState extends State<DetailPage> {
             price: _studio.price,
             per: _studio.duration,
             onBookPressed: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  backgroundColor: const Color(0xFF1F8063),
-                  content: Text(
-                    'Slot tersedia untuk ${_studio.name}! Siap melanjutkan ke pembayaran.',
-                  ),
-                  duration: const Duration(seconds: 2),
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => AvailabilityPage(studio: _studio),
                 ),
               );
             },
@@ -373,11 +362,7 @@ class _HostRow extends StatelessWidget {
 }
 
 class _InfoChip extends StatelessWidget {
-  const _InfoChip({
-    this.icon,
-    this.iconColor,
-    required this.label,
-  });
+  const _InfoChip({this.icon, this.iconColor, required this.label});
 
   final IconData? icon;
   final Color? iconColor;
@@ -517,4 +502,3 @@ class _BottomBookingBar extends StatelessWidget {
     );
   }
 }
-

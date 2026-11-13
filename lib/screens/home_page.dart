@@ -5,10 +5,6 @@ import 'detail_page.dart';
 import 'find_studio_page.dart';
 import 'search_result_page.dart';
 
-// ============================================================================
-// HALAMAN UTAMA / DASHBOARD CUSTOMER
-// Dikerjakan oleh: Diah Meutya Affifah (162024023)
-// ============================================================================
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -58,18 +54,14 @@ class _HomePageState extends State<HomePage> {
   void _navigateToFindStudio() {
     Navigator.push(
       context,
-      MaterialPageRoute(
-        builder: (context) => const FindStudioPage(),
-      ),
+      MaterialPageRoute(builder: (context) => const FindStudioPage()),
     );
   }
 
   void _navigateToDetail(Studio studio) {
     Navigator.push(
       context,
-      MaterialPageRoute(
-        builder: (context) => DetailPage(studio: studio),
-      ),
+      MaterialPageRoute(builder: (context) => DetailPage(studio: studio)),
     );
   }
 
@@ -184,9 +176,15 @@ class _HomePageState extends State<HomePage> {
 
                                   // Konten dalam kartu
                                   Padding(
-                                    padding: const EdgeInsets.fromLTRB(18, 30, 18, 28),
+                                    padding: const EdgeInsets.fromLTRB(
+                                      18,
+                                      30,
+                                      18,
+                                      28,
+                                    ),
                                     child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         const Text(
                                           'STUDIO MATCH',
@@ -216,7 +214,9 @@ class _HomePageState extends State<HomePage> {
                                           ),
                                           decoration: BoxDecoration(
                                             color: Colors.white,
-                                            borderRadius: BorderRadius.circular(14),
+                                            borderRadius: BorderRadius.circular(
+                                              14,
+                                            ),
                                           ),
                                           child: Row(
                                             children: const [
@@ -409,9 +409,7 @@ class _HomePageState extends State<HomePage> {
         margin: EdgeInsets.zero,
         elevation: 0,
         color: Colors.white,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(18),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
         clipBehavior: Clip.antiAlias,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -572,9 +570,7 @@ class _HomePageState extends State<HomePage> {
           if (index == 1) {
             Navigator.push(
               context,
-              MaterialPageRoute(
-                builder: (context) => const SearchResultPage(),
-              ),
+              MaterialPageRoute(builder: (context) => const SearchResultPage()),
             );
           } else if (index > 1) {
             ScaffoldMessenger.of(context).showSnackBar(
@@ -615,4 +611,3 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
-
