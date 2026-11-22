@@ -81,6 +81,9 @@ class _SearchResultPageState extends State<SearchResultPage> {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isTablet = screenWidth >= 600;
+
     return Scaffold(
       backgroundColor: const Color(0xFFFBF9F4),
       floatingActionButton: _showBackToTopButton
@@ -104,348 +107,375 @@ class _SearchResultPageState extends State<SearchResultPage> {
         bottom: false,
         child: ListView(
           controller: _scrollController,
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
-          children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
+          padding: EdgeInsets.symmetric(
+            horizontal: isTablet ? 32 : 20,
+            vertical: 14,
+          ),
               children: [
-                // Tombol Back (Kembali)
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    // Tombol Back (Kembali)
+                    Container(
+                      width: 38,
+                      height: 38,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                          color: const Color(0xFFE0DDD7),
+                          width: 1,
+                        ),
+                      ),
+                      child: IconButton(
+                        icon: const Icon(
+                          Icons.chevron_left,
+                          color: Color(0xFF1E1E1E),
+                          size: 22,
+                        ),
+                        onPressed: () => Navigator.pop(context),
+                        padding: EdgeInsets.zero,
+                      ),
+                    ),
+                    const SizedBox(width: 14),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: const [
+                        // Kategori: STUDIO MATCH
+                        Text(
+                          'STUDIO MATCH',
+                          style: TextStyle(
+                            fontSize: 10,
+                            fontWeight: FontWeight.w800,
+                            letterSpacing: 1.5,
+                            color: Color(0xFF2E2A25),
+                          ),
+                        ),
+                        SizedBox(height: 2),
+                        // Judul: Hasil Pencarian Studio
+                        Text(
+                          'Hasil Pencarian Studio',
+                          style: TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.w800,
+                            letterSpacing: -0.5,
+                            color: Color(0xFF141414),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 18),
+
+                // Kartu Gelap Ringkasan Filter Pencarian (Kontras Tinggi)
                 Container(
-                  width: 38,
-                  height: 38,
                   decoration: BoxDecoration(
-                    color: Colors.white,
-                    shape: BoxShape.circle,
+                    color: const Color(0xFF1E2528),
+                    borderRadius: BorderRadius.circular(16),
                     border: Border.all(
-                      color: const Color(0xFFE0DDD7),
+                      color: const Color(0xFF323D42),
                       width: 1,
                     ),
                   ),
-                  child: IconButton(
-                    icon: const Icon(
-                      Icons.chevron_left,
-                      color: Color(0xFF1E1E1E),
-                      size: 22,
-                    ),
-                    onPressed: () => Navigator.pop(context),
-                    padding: EdgeInsets.zero,
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          // Filter Lokasi
+                          Row(
+                            children: [
+                              const Icon(
+                                Icons.location_on_outlined,
+                                size: 16,
+                                color: Colors.white,
+                              ),
+                              const SizedBox(width: 6),
+                              Text(
+                                widget.location,
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 12.5,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ],
+                          ),
+                          // Filter Tanggal
+                          Row(
+                            children: [
+                              const Icon(
+                                Icons.calendar_today_outlined,
+                                size: 16,
+                                color: Colors.white,
+                              ),
+                              const SizedBox(width: 6),
+                              Text(
+                                widget.date,
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 12.5,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ],
+                          ),
+                          // Filter Jam & Durasi
+                          Row(
+                            children: [
+                              const Icon(
+                                Icons.access_time,
+                                size: 16,
+                                color: Colors.white,
+                              ),
+                              const SizedBox(width: 6),
+                              Text(
+                                widget.time,
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 12.5,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 14),
+                      Row(
+                        children: [
+                          // Filter Jumlah Orang
+                          const Icon(
+                            Icons.people_outline,
+                            size: 16,
+                            color: Colors.white,
+                          ),
+                          const SizedBox(width: 6),
+                          Text(
+                            widget.people,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 12.5,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          const SizedBox(width: 14),
+                          // Filter Fasilitas AC
+                          const Icon(
+                            Icons.ac_unit,
+                            size: 15,
+                            color: Color(0xFF67D8E8),
+                          ),
+                          const SizedBox(width: 6),
+                          Text(
+                            widget.cooling,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 12.5,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          const Spacer(),
+                          // Tombol Edit
+                          ElevatedButton(
+                            onPressed: () => Navigator.pop(context),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: const Color(0xFF354449),
+                              foregroundColor: Colors.white,
+                              elevation: 0,
+                              side: const BorderSide(
+                                color: Color(0xFF56686F),
+                                width: 1,
+                              ),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 15,
+                                vertical: 7,
+                              ),
+                              minimumSize: Size.zero,
+                              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                            ),
+                            child: const Text(
+                              'Edit',
+                              style: TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                 ),
-                const SizedBox(width: 14),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: const [
-                    // Kategori: STUDIO MATCH
-                    Text(
-                      'STUDIO MATCH',
-                      style: TextStyle(
-                        fontSize: 9,
-                        fontWeight: FontWeight.w600,
-                        letterSpacing: 1.5,
-                        color: Color(0xFF8C877D),
-                      ),
-                    ),
-                    SizedBox(height: 2),
-                    // Judul: Hasil Pencarian Studio
-                    Text(
-                      'Hasil Pencarian Studio',
+                const SizedBox(height: 22),
+
+                // Label: MATCHING YOUR REQUEST
+                const Text(
+                  'MATCHING YOUR REQUEST',
+                  style: TextStyle(
+                    fontSize: 10,
+                    fontWeight: FontWeight.w800,
+                    letterSpacing: 1.5,
+                    color: Color(0xFF2E2A25),
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    // Teks Total Studio
+                    const Text(
+                      '12 studios found',
                       style: TextStyle(
                         fontSize: 22,
-                        fontWeight: FontWeight.w700,
-                        letterSpacing: -0.5,
-                        color: Color(0xFF1A1A1A),
+                        fontWeight: FontWeight.w800,
+                        letterSpacing: -0.4,
+                        color: Color(0xFF141414),
+                      ),
+                    ),
+                    // Dropdown Urutan
+                    DropdownButtonHideUnderline(
+                      child: DropdownButton<String>(
+                        value: _selectedSort,
+                        alignment: AlignmentDirectional.centerEnd,
+                        borderRadius: BorderRadius.circular(14),
+                        dropdownColor: Colors.white,
+                        elevation: 3,
+                        icon: const Icon(
+                          Icons.keyboard_arrow_down,
+                          size: 15,
+                          color: Color(0xFF333333),
+                        ),
+                        isDense: true,
+                        style: const TextStyle(
+                          fontSize: 12,
+                          color: Color(0xFF1E1E1E),
+                          fontWeight: FontWeight.w700,
+                        ),
+                        selectedItemBuilder: (BuildContext context) {
+                          return _sortOptions.map((String value) {
+                            return Align(
+                              alignment: Alignment.centerRight,
+                              child: Text(
+                                value,
+                                style: const TextStyle(
+                                  fontSize: 12,
+                                  color: Color(0xFF1E1E1E),
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                            );
+                          }).toList();
+                        },
+                        items: _sortOptions.map((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(
+                              value,
+                              style: const TextStyle(
+                                fontSize: 12,
+                                color: Color(0xFF1E1E1E),
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                          );
+                        }).toList(),
+                        onChanged: (String? newValue) {
+                          if (newValue != null) {
+                            setState(() {
+                              _selectedSort = newValue;
+                            });
+                          }
+                        },
                       ),
                     ),
                   ],
                 ),
-              ],
-            ),
-            const SizedBox(height: 18),
+                const SizedBox(height: 12),
 
-            // Kartu Gelap Ringkasan Filter Pencarian
-            Container(
-              decoration: BoxDecoration(
-                color: const Color(0xFF222B2E),
-                borderRadius: BorderRadius.circular(16),
-              ),
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      // Filter Lokasi
-                      Row(
-                        children: [
-                          const Icon(
-                            Icons.location_on_outlined,
-                            size: 15,
-                            color: Color(0xFFB0B8BA),
-                          ),
-                          const SizedBox(width: 6),
-                          Text(
-                            widget.location,
-                            style: const TextStyle(
-                              color: Color(0xFFB0B8BA),
-                              fontSize: 11.5,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ],
-                      ),
-                      // Filter Tanggal
-                      Row(
-                        children: [
-                          const Icon(
-                            Icons.calendar_today_outlined,
-                            size: 15,
-                            color: Color(0xFFB0B8BA),
-                          ),
-                          const SizedBox(width: 6),
-                          Text(
-                            widget.date,
-                            style: const TextStyle(
-                              color: Color(0xFFB0B8BA),
-                              fontSize: 11.5,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ],
-                      ),
-                      // Filter Jam & Durasi
-                      Row(
-                        children: [
-                          const Icon(
-                            Icons.access_time,
-                            size: 15,
-                            color: Color(0xFFB0B8BA),
-                          ),
-                          const SizedBox(width: 6),
-                          Text(
-                            widget.time,
-                            style: const TextStyle(
-                              color: Color(0xFFB0B8BA),
-                              fontSize: 11.5,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
+                // Banner Info Hasil Cocok (Centang Hijau)
+                Container(
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFE2F4EC),
+                    borderRadius: BorderRadius.circular(12),
                   ),
-                  const SizedBox(height: 14),
-                  Row(
-                    children: [
-                      // Filter Jumlah Orang
-                      const Icon(
-                        Icons.people_outline,
-                        size: 15,
-                        color: Color(0xFFB0B8BA),
-                      ),
-                      const SizedBox(width: 6),
-                      Text(
-                        widget.people,
-                        style: const TextStyle(
-                          color: Color(0xFFB0B8BA),
-                          fontSize: 11.5,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      const SizedBox(width: 14),
-                      // Filter Fasilitas AC
-                      const Icon(
-                        Icons.ac_unit,
-                        size: 14,
-                        color: Color(0xFF67D8E8),
-                      ),
-                      const SizedBox(width: 6),
-                      Text(
-                        widget.cooling,
-                        style: const TextStyle(
-                          color: Color(0xFFB0B8BA),
-                          fontSize: 11.5,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      const Spacer(),
-                      // Tombol Edit
-                      ElevatedButton(
-                        onPressed: () => Navigator.pop(context),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFF333E42),
-                          foregroundColor: Colors.white,
-                          elevation: 0,
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 14,
-                            vertical: 7,
-                          ),
-                          minimumSize: Size.zero,
-                          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                        ),
-                        child: const Text(
-                          'Edit',
-                          style: TextStyle(
-                            fontSize: 11.5,
-                            fontWeight: FontWeight.w700,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 22),
-
-            // Label: MATCHING YOUR REQUEST
-            const Text(
-              'MATCHING YOUR REQUEST',
-              style: TextStyle(
-                fontSize: 8.5,
-                fontWeight: FontWeight.w700,
-                letterSpacing: 1.6,
-                color: Color(0xFF8C877D),
-              ),
-            ),
-            const SizedBox(height: 8),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                // Teks Total Studio
-                const Text(
-                  '12 studios found',
-                  style: TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.w700,
-                    letterSpacing: -0.4,
-                    color: Color(0xFF1E1E1E),
-                  ),
-                ),
-                // Dropdown Urutan
-                DropdownButtonHideUnderline(
-                  child: DropdownButton<String>(
-                    value: _selectedSort,
-                    alignment: AlignmentDirectional.centerEnd,
-                    borderRadius: BorderRadius.circular(14),
-                    dropdownColor: Colors.white,
-                    elevation: 3,
-                    icon: const Icon(
-                      Icons.keyboard_arrow_down,
-                      size: 15,
-                      color: Color(0xFF757575),
-                    ),
-                    isDense: true,
-                    style: const TextStyle(
-                      fontSize: 11,
-                      color: Color(0xFF757575),
-                      fontWeight: FontWeight.w500,
-                    ),
-                    selectedItemBuilder: (BuildContext context) {
-                      return _sortOptions.map((String value) {
-                        return Align(
-                          alignment: Alignment.centerRight,
-                          child: Text(
-                            value,
-                            style: const TextStyle(
-                              fontSize: 11,
-                              color: Color(0xFF757575),
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        );
-                      }).toList();
-                    },
-                    items: _sortOptions.map((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
+                  padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 11),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: const [
+                      Icon(Icons.check_circle_outline, color: Color(0xFF135A46), size: 18),
+                      SizedBox(width: 10),
+                      Expanded(
                         child: Text(
-                          value,
-                          style: const TextStyle(
+                          'These studios match your location, capacity, cooling, budget, date, time, and duration.',
+                          style: TextStyle(
+                            color: Color(0xFF135A46),
                             fontSize: 11,
-                            color: Color(0xFF555555),
-                            fontWeight: FontWeight.w500,
+                            fontWeight: FontWeight.w600,
+                            height: 1.35,
                           ),
                         ),
-                      );
-                    }).toList(),
-                    onChanged: (String? newValue) {
-                      if (newValue != null) {
-                        setState(() {
-                          _selectedSort = newValue;
-                        });
-                      }
-                    },
+                      ),
+                    ],
                   ),
                 ),
-              ],
-            ),
-            const SizedBox(height: 12),
+                const SizedBox(height: 18),
 
-            // Banner Info Hasil Cocok (Centang Hijau)
-            Container(
-              decoration: BoxDecoration(
-                color: const Color(0xFFE2F4EC),
-                borderRadius: BorderRadius.circular(12),
-              ),
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: const [
-                  Icon(Icons.check, color: Color(0xFF1F8063), size: 18),
-                  SizedBox(width: 10),
-                  Expanded(
-                    child: Text(
-                      'These studios match your location, capacity, cooling, budget, date, time, and duration.',
-                      style: TextStyle(
-                        color: Color(0xFF1F8063),
-                        fontSize: 9.5,
-                        fontWeight: FontWeight.w500,
-                        height: 1.35,
+                // Daftar Studio Cards: 2 Kolom di Tablet, 1 Kolom di HP
+                if (isTablet) ...[
+                  for (int i = 0; i < _studios.length; i += 2)
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 18),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(child: _buildStudioCard(_studios[i], i)),
+                          const SizedBox(width: 16),
+                          Expanded(
+                            child: i + 1 < _studios.length
+                                ? _buildStudioCard(_studios[i + 1], i + 1)
+                                : const SizedBox.shrink(),
+                          ),
+                        ],
                       ),
                     ),
-                  ),
+                ] else ...[
+                  for (int i = 0; i < _studios.length; i++)
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 18),
+                      child: _buildStudioCard(_studios[i], i),
+                    ),
                 ],
-              ),
-            ),
-            const SizedBox(height: 18),
 
-            // Daftar Studio Cards
-            ..._studios.asMap().entries.map((entry) {
-              final index = entry.key;
-              final studio = entry.value;
-              return Padding(
-                padding: const EdgeInsets.only(bottom: 18),
-                child: _buildStudioCard(studio, index),
-              );
-            }),
+                const SizedBox(height: 10),
 
-            const SizedBox(height: 10),
-
-            // Teks Keterangan Footer di Bawah Halaman
-            const Center(
-              child: Text(
-                'Results are based on your request. Select a studio to view its details before\nchecking the schedule.',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 8.5,
-                  color: Color(0xFF8C867D),
-                  height: 1.35,
-                  letterSpacing: -0.15,
+                // Teks Keterangan Footer di Bawah Halaman
+                const Center(
+                  child: Text(
+                    'Results are based on your request. Select a studio to view its details before\nchecking the schedule.',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 11,
+                      color: Color(0xFF333333),
+                      height: 1.4,
+                      letterSpacing: -0.15,
+                    ),
+                  ),
                 ),
-              ),
+                const SizedBox(height: 16),
+              ],
             ),
-            const SizedBox(height: 16),
-          ],
-        ),
-      ),
-    );
-  }
+          ),
+        );
+      }
 
   // Fungsi Pembuat Kartu Studio (Studio Card)
   Widget _buildStudioCard(Studio studio, int index) {
@@ -567,15 +597,15 @@ class _SearchResultPageState extends State<SearchResultPage> {
                       const Icon(
                         Icons.location_on_outlined,
                         size: 14,
-                        color: Color(0xFF8A8A8A),
+                        color: Color(0xFF333333),
                       ),
                       const SizedBox(width: 4),
                       Text(
                         studio.location,
                         style: const TextStyle(
-                          fontSize: 11.5,
-                          color: Color(0xFF8A8A8A),
-                          fontWeight: FontWeight.w500,
+                          fontSize: 12,
+                          color: Color(0xFF333333),
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                     ],
@@ -605,37 +635,39 @@ class _SearchResultPageState extends State<SearchResultPage> {
                             height: 6,
                             decoration: const BoxDecoration(
                               shape: BoxShape.circle,
-                              color: Color(0xFF00B368),
+                              color: Color(0xFF00A86B),
                             ),
                           ),
                           const SizedBox(width: 6),
                           Text(
                             studio.availableTime,
                             style: const TextStyle(
-                              fontSize: 11.5,
-                              fontWeight: FontWeight.w600,
-                              color: Color(0xFF00834C),
+                              fontSize: 12,
+                              fontWeight: FontWeight.w700,
+                              color: Color(0xFF0D7A4D),
                             ),
                           ),
                         ],
                       ),
                       // Harga & Durasi Sewa
                       Row(
+                        crossAxisAlignment: CrossAxisAlignment.baseline,
+                        textBaseline: TextBaseline.alphabetic,
                         children: [
                           Text(
                             studio.price,
                             style: const TextStyle(
-                              fontSize: 15,
+                              fontSize: 16,
                               fontWeight: FontWeight.w800,
-                              color: Color(0xFF1A1A1A),
+                              color: Color(0xFF141414),
                             ),
                           ),
                           Text(
                             studio.duration,
                             style: const TextStyle(
-                              fontSize: 11,
-                              fontWeight: FontWeight.w400,
-                              color: Color(0xFF8A8A8A),
+                              fontSize: 11.5,
+                              fontWeight: FontWeight.w600,
+                              color: Color(0xFF333333),
                             ),
                           ),
                         ],
@@ -654,16 +686,16 @@ class _SearchResultPageState extends State<SearchResultPage> {
   Widget _buildTag(String tag) {
     return Container(
       decoration: BoxDecoration(
-        color: const Color(0xFFF1EFEA),
+        color: const Color(0xFFEDE9E2),
         borderRadius: BorderRadius.circular(6),
       ),
       padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 4.5),
       child: Text(
         tag,
         style: const TextStyle(
-          color: Color(0xFF736F67),
-          fontSize: 10.5,
-          fontWeight: FontWeight.w600,
+          color: Color(0xFF141414),
+          fontSize: 11,
+          fontWeight: FontWeight.w700,
         ),
       ),
     );
